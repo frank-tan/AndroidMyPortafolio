@@ -1,12 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/project_card_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:layout_below="@+id/pager"
+        android:layout_height="0dp"
+        android:layout_weight="2"
         />
-</RelativeLayout>
+
+</LinearLayout>
