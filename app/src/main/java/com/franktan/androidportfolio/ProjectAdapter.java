@@ -4,13 +4,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.franktan.androidportfolio.model.Project;
 
 /**
  * Created by Frank Tan on 21/07/2015.
  */
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
-    private String[] mDataset;
+    private Project[] mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -18,15 +21,17 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mProjName, mProjDesc;
+        public ImageView mProjImage;
         public ViewHolder(View view) {
             super(view);
             mProjName = (TextView) view.findViewById(R.id.project_name);
             mProjDesc = (TextView) view.findViewById(R.id.project_description);
+            mProjImage = (ImageView) view.findViewById(R.id.project_image);
         }
     }
 
     // Provide a suitable constructor
-    public ProjectAdapter(String[] projectDataset) {
+    public ProjectAdapter(Project[] projectDataset) {
         mDataset = projectDataset;
     }
 
@@ -46,8 +51,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mProjName.setText(mDataset[position]);
-
+        holder.mProjName.setText(mDataset[position].getmName());
+        holder.mProjDesc.setText(mDataset[position].getmDescription());
+        holder.mProjImage.setImageResource(mDataset[position].getmImage());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

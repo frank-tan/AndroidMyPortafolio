@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.franktan.androidportfolio.model.Project;
+
 
 public class MainActivity extends ActionBarActivity {
     RecyclerView mRecyclerView;
@@ -29,7 +31,11 @@ public class MainActivity extends ActionBarActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter
-        mAdapter = new ProjectAdapter(new String[] {"a", "b", "c", "d", "e"});
+        mAdapter = new ProjectAdapter(new Project[] {
+                new Project("Popular Movies", "A popular movie app", R.drawable.android_multicolor),
+                new Project("Score app", "A score app", R.drawable.android_multicolor),
+                new Project("Library app", "A library app", R.drawable.android_multicolor)
+        });
         mRecyclerView.setAdapter(mAdapter);
 
     }
