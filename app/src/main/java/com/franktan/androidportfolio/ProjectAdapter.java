@@ -1,9 +1,10 @@
 package com.franktan.androidportfolio;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,18 +13,18 @@ import com.franktan.androidportfolio.model.Project;
 /**
  * Created by Frank Tan on 21/07/2015.
  */
-public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
+public class ProjectAdapter extends ArrayAdapter<Project> {
     private Project[] mDataset;
+    private Context mContext;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder {
         // each data item is just a string in this case
         public TextView mProjName, mProjDesc;
         public ImageView mProjImage;
         public ViewHolder(View view) {
-            super(view);
             mProjName = (TextView) view.findViewById(R.id.project_name);
             mProjDesc = (TextView) view.findViewById(R.id.project_description);
             mProjImage = (ImageView) view.findViewById(R.id.project_image);
@@ -31,34 +32,31 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     }
 
     // Provide a suitable constructor
-    public ProjectAdapter(Project[] projectDataset) {
+    public ProjectAdapter(Context context, Project[] projectDataset) {
+        super(context, -1, projectDataset);
         mDataset = projectDataset;
+        mContext = context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
-    public ProjectAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.project_card, parent, false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
 
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
-    }
+        if(convertView == null) {
+            convertView = LayoutInflater.from(mContext)
+                    .inflate(R.layout.project_card, parent, false);
 
-    // Replace the contents of a view (invoked by the layout manager)
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mProjName.setText(mDataset[position].getmName());
-        holder.mProjDesc.setText(mDataset[position].getmDescription());
-        holder.mProjImage.setImageResource(mDataset[position].getmImage());
-    }
+            // Creates a ViewHolder and store references to
+            // the two children views we want to bind data to.
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        viewHolder.mProjName.setText(mDataset[position].getmName());
+        viewHolder.mProjDesc.setText(mDataset[position].getmDescription());
+        viewHolder.mProjImage.setImageResource(mDataset[position].getmImage());
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return mDataset.length;
+        return convertView;
     }
 }
