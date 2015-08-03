@@ -1,7 +1,8 @@
 package com.franktan.androidportfolio;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -30,6 +31,22 @@ public class MainActivityFragment extends Fragment {
      */
     private PagerAdapter mPagerAdapter;
 
+    private Handler mHandler = new Handler();
+
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            int currentPage = mPager.getCurrentItem();
+            int nextPage;
+            if( currentPage >= 4){
+                nextPage = 0;
+            } else {
+                nextPage = currentPage + 1;
+            }
+            mPager.setCurrentItem(nextPage, true);
+            mHandler.postDelayed(runnable, 5000);
+        }
+    };
+
     public MainActivityFragment() {
     }
 
@@ -42,6 +59,7 @@ public class MainActivityFragment extends Fragment {
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) inflater.inflate(R.layout.slider, mProjectListView, false);
         mPagerAdapter = new SlidePagerAdapter(getActivity().getSupportFragmentManager());
+
         mPager.setAdapter(mPagerAdapter);
 
 
@@ -59,5 +77,19 @@ public class MainActivityFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mHandler.postDelayed(runnable, 5000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mHandler!= null) {
+            mHandler.removeCallbacks(runnable);
+        }
     }
 }

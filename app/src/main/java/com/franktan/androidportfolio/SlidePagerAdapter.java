@@ -28,4 +28,5 @@ public class SlidePagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return NUM_PAGES;
     }
+
 }

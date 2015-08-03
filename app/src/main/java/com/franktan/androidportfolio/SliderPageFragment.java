@@ -19,7 +19,7 @@ public class SliderPageFragment extends Fragment {
         int mNum = getArguments() != null ? getArguments().getInt("num") : 1;
         switch (mNum){
             case 0:
-                title = "Responsive Web Design";
+                title = "Responsive Web Apps";
                 break;
             case 1:
                 title = "Server Side Development";
